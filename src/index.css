@@ -135,3 +135,21 @@ body{font-family:'Lora',Georgia,serif;background:var(--bg);color:var(--text);min
   .sentence,.vt-question{font-size:1rem}
   .mode-cards,.section-grid,.vt-options{grid-template-columns:1fr}
 }
+
+.font-size-control {
+  position: fixed;
+  top: .8rem;
+  right: .8rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: 999px;
+  padding: .4rem .8rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  z-index: 50;
+}
+.font-size-control input[type="range"] {
+  width: 90px;
+}

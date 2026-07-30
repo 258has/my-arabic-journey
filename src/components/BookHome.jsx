@@ -74,6 +74,11 @@ export default function BookHome({ book, onNav }) {
             <p>All vocab words in random order.</p>
           </div>
         </div>
+        <div className="mode-card" onClick={() => onNav({ screen: 'typing' })}>
+            <div className="icon">⌨️</div>
+            <h2>Typing Practice</h2>
+            <p>Type the full Arabic sentence yourself — no word bank.</p>
+          </div>
         <hr className="divider" />
         <div style={{ textAlign: 'center', paddingTop: '.2rem' }}>
           <span className="ref-link" onClick={() => onNav({ screen: 'ref', from: 'book' })}>

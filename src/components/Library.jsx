@@ -1,7 +1,15 @@
-import { getLevels } from '../content/bookRegistry';
+import { getSeries } from '../content/bookRegistry';
 
-export default function Library({ fontSize, onFontSize, onNav }) {
-  const levels = getLevels();
+export default function Library({ onNav }) {
+  const series = getSeries();
+
+  function handleSeriesClick(s) {
+    if (s.books.length === 1) {
+      onNav({ screen: 'book', bookId: s.books[0].id });
+    } else {
+      onNav({ screen: 'series', seriesId: s.seriesId });
+    }
+  }
 
   return (
     <div>
@@ -11,49 +19,21 @@ export default function Library({ fontSize, onFontSize, onNav }) {
         <p>Read, build sentences, test vocab — level by level</p>
       </div>
 
-      <div className="card" style={{ padding: '1.2rem' }}>
-        <div className="slider-row">
-          <label>🔤 Arabic text size</label>
-          <input
-            type="range"
-            min="0.8"
-            max="1.8"
-            step="0.05"
-            value={fontSize}
-            onChange={(e) => onFontSize(parseFloat(e.target.value))}
-          />
-          <span className="ar-preview">مَرْحَبًا</span>
+      <div className="card">
+        <div className="section-grid">
+          {series.map((s) => (
+            <div
+              key={s.seriesId}
+              className="section-btn"
+              onClick={() => handleSeriesClick(s)}
+            >
+              <div className="sec-num">{s.titleAr}</div>
+              <div className="sec-name">{s.title}</div>
+              <div className="sec-meta">{s.description}</div>
+            </div>
+          ))}
         </div>
       </div>
-
-      {levels.map(({ level, books }) => (
-        <div className="card" key={level}>
-          <p
-            style={{
-              fontSize: '.8rem',
-              textTransform: 'uppercase',
-              letterSpacing: '.05em',
-              color: 'var(--muted)',
-              marginBottom: '1rem',
-            }}
-          >
-            Level {level}
-          </p>
-          <div className="section-grid">
-            {books.map((book) => (
-              <div
-                key={book.id}
-                className="section-btn"
-                onClick={() => onNav({ screen: 'book', bookId: book.id })}
-              >
-                <div className="sec-num">{book.titleAr}</div>
-                <div className="sec-name">{book.title}</div>
-                <div className="sec-meta">{book.description}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
     </div>
   );
 }

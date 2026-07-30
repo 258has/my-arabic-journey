@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import Library from './components/Library';
+import SeriesPage from './components/SeriesPage';
 import BookHome from './components/BookHome';
 import SectionMenu from './components/SectionMenu';
 import SentenceBuilder from './components/SentenceBuilder';
+import TypingPractice from './components/TypingPractice';
 import VocabTester from './components/VocabTester';
 import Reference from './components/Reference';
+import FontSizeControl from './components/FontSizeControl';
 import { getBook } from './content/bookRegistry';
 import { loadProgress, saveProgress } from './data/progressStore';
 
 export default function App() {
   const [screen, setScreen] = useState('library');
+  const [seriesId, setSeriesId] = useState(null);
   const [bookId, setBookId] = useState(null);
   const [sectionMenuMode, setSectionMenuMode] = useState('quiz');
   const [quizMode, setQuizMode] = useState('ordered');
@@ -20,6 +24,7 @@ export default function App() {
   const [progress, setProgress] = useState({});
   const [quizVisited, setQuizVisited] = useState(false);
   const [vocabVisited, setVocabVisited] = useState(false);
+  const [typingVisited, setTypingVisited] = useState(false);
 
   const book = bookId ? getBook(bookId) : null;
 
@@ -30,6 +35,7 @@ export default function App() {
   useEffect(() => {
     if (screen === 'quiz') setQuizVisited(true);
     if (screen === 'vocab') setVocabVisited(true);
+    if (screen === 'typing') setTypingVisited(true);
   }, [screen]);
 
   useEffect(() => {
@@ -42,15 +48,21 @@ export default function App() {
       return;
     }
     if (target.screen === 'library') {
+      setSeriesId(null);
       setBookId(null);
       setQuizVisited(false);
       setVocabVisited(false);
+      setTypingVisited(false);
       setScreen('library');
+    } else if (target.screen === 'series') {
+      if (target.seriesId) setSeriesId(target.seriesId);
+      setScreen('series');
     } else if (target.screen === 'book') {
       if (target.bookId) {
         setBookId(target.bookId);
         setQuizVisited(false);
         setVocabVisited(false);
+        setTypingVisited(false);
       }
       setScreen('book');
     } else if (target.screen === 'sections') {
@@ -64,6 +76,8 @@ export default function App() {
       if (target.vocabMode) setVocabMode(target.vocabMode);
       if (target.sectionIdx !== undefined) setSectionIdx(target.sectionIdx);
       setScreen('vocab');
+    } else if (target.screen === 'typing') {
+      setScreen('typing');
     } else if (target.screen === 'ref') {
       setRefFrom(target.from);
       setScreen('ref');
@@ -86,9 +100,19 @@ export default function App() {
     }
   }
 
+  function handleTypingFinish(score, total) {
+    if (bookId) {
+      const updated = saveProgress(bookId, 'typing', score, total);
+      setProgress(updated);
+    }
+  }
+
   return (
     <div className="container">
-      {screen === 'library' && <Library fontSize={fontSize} onFontSize={setFontSize} onNav={handleNav} />}
+      <FontSizeControl fontSize={fontSize} onFontSize={setFontSize} />
+
+      {screen === 'library' && <Library onNav={handleNav} />}
+      {screen === 'series' && seriesId && <SeriesPage seriesId={seriesId} onNav={handleNav} />}
       {screen === 'book' && book && <BookHome book={book} onNav={handleNav} />}
       {screen === 'sections' && book && (
         <SectionMenu book={book} mode={sectionMenuMode} progress={progress} onNav={handleNav} />
@@ -113,6 +137,16 @@ export default function App() {
             vocabMode={vocabMode}
             sectionIdx={sectionIdx}
             onFinish={handleVocabFinish}
+            onNav={handleNav}
+          />
+        </div>
+      )}
+      {typingVisited && book && (
+        <div style={{ display: screen === 'typing' ? 'block' : 'none' }}>
+          <TypingPractice
+            key={bookId + '-typing'}
+            book={book}
+            onFinish={handleTypingFinish}
             onNav={handleNav}
           />
         </div>

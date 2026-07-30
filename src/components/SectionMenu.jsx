@@ -1,9 +1,8 @@
-import { getSections } from '../data/helpers';
+import { getSections, getSectionName, flattenVocabWithTopics } from '../data/helpers';
 
 export default function SectionMenu({ book, mode, progress, onNav }) {
-  const items = mode === 'quiz' ? book.questions : book.vocabFlat;
+  const items = mode === 'quiz' ? book.questions : flattenVocabWithTopics(book.vocab);
   const secs = getSections(items);
-  const names = mode === 'quiz' ? book.quizSectionNames : book.vocabSectionNames;
   const title = mode === 'quiz' ? '📖 Sentence Builder — Choose a Section' : '🧠 Vocabulary — Choose a Section';
 
   return (
@@ -16,7 +15,7 @@ export default function SectionMenu({ book, mode, progress, onNav }) {
         {secs.map((sec, i) => {
           const key = mode + '-' + i;
           const prog = progress[key];
-          const name = names[i] || 'Section ' + (i + 1);
+          const name = getSectionName(sec, i);
           const done = prog ? `✓ ${prog.score}/${prog.total}` : '';
           const doneClass = prog && prog.score === prog.total ? ' done' : '';
           return (
