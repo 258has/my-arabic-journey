@@ -6,6 +6,10 @@ import iRead1Meta from './books/i-read-series/book-1/meta';
 import { ALL_Q as iRead1Questions } from './books/i-read-series/book-1/questions';
 import { VOCAB as iRead1Vocab, VOCAB_FLAT as iRead1VocabFlat } from './books/i-read-series/book-1/vocab';
 
+import iRead2Meta from './books/i-read-series/book-2/meta';
+import { ALL_Q as iRead2Questions } from './books/i-read-series/book-2/questions';
+import { VOCAB as iRead2Vocab, VOCAB_FLAT as iRead2VocabFlat } from './books/i-read-series/book-2/vocab';
+
 import shirinSeriesMeta from './series/shirin-baghdad/seriesMeta';
 import iReadSeriesMeta from './series/i-read-series/seriesMeta';
 
@@ -21,6 +25,12 @@ export const BOOKS = [
     questions: iRead1Questions,
     vocab: iRead1Vocab,
     vocabFlat: iRead1VocabFlat,
+  },
+    {
+    ...iRead2Meta,
+    questions: iRead2Questions,
+    vocab: iRead2Vocab,
+    vocabFlat: iRead2VocabFlat,
   },
 ];
 

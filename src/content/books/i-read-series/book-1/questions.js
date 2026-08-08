@@ -34,5 +34,5 @@ export const ALL_Q = [
   {topic:'طَلَبَ — Requesting',ctx:'Everyday life',en:"What would you like to order?",answer:['مَاذَا','تَطْلُبُ؟'],extra:['بَعَثَ','يَسْكُنُ','الرِّسَالَةَ','الظَّرْفَ','نَسِيَ','جَيِّدَة','شَبِعَ','مَسَحَ']},
   {topic:'طَلَبَ — Requesting',ctx:'Everyday life',en:"We asked for the bill after lunch.",answer:['طَلَبْنَا','الْحِسَابَ','بَعْدَ','الْغَدَاءِ'],extra:['بَعَثَ','يَسْكُنُ','الرِّسَالَةَ','الظَّرْفَ','نَسِيَ','جَيِّدَة','شَبِعَ','صَعِدَ']},
   {topic:'طَلَبَ — Requesting',ctx:'Everyday life',en:"Ask the teacher for an explanation.",answer:['اطْلُبْ','مِنَ','الْمُعَلِّمِ','شَرْحًا'],extra:['بَعَثَ','يَسْكُنُ','الرِّسَالَةَ','الظَّرْفَ','نَسِيَ','جَيِّدَة','شَبِعَ','نَثَرَ']},
-  {topic:'طَلَبَ — Requesting',ctx:'Everyday life',en:"They ask for permission before leaving.",answer:['يَطْلُبُونَ','الْإِذْنَ','قَبْلَ','الْمُغَادَرَةِ'],extra:['بَعَثَ','يَسْكُنُ','الرِّسَالَةَ','الظَّرْفَ','نَسِيَ','جَيِّدَة','شَبِعَ','مَسَحَ']},
+  
 ];
